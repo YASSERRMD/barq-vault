@@ -33,3 +33,11 @@ barq-proto         = { path = "../barq-proto" }
 barq-compress      = { path = "../barq-compress" }
 subtle             = "2"
 base64             = { workspace = true }
+
+[dev-dependencies]
+barq-test-utils = { path = "../barq-test-utils" }
+tempfile = { workspace = true }
+serial_test = { workspace = true }
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+tower = "0.4"
+blake3 = { workspace = true }

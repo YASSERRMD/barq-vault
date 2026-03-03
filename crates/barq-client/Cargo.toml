@@ -24,3 +24,7 @@ base64        = { workspace = true }
 barq-types    = { path = "../barq-types" }
 barq-proto    = { path = "../barq-proto" }
 barq-ingest   = { path = "../barq-ingest" }
+
+[dev-dependencies]
+barq-test-utils = { path = "../barq-test-utils" }
+rstest = { workspace = true }
