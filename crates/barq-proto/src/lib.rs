@@ -12,6 +12,8 @@ pub mod barqvault {
 }
 
 pub use barqvault::v1::barq_vault_server::BarqVault;
+pub use barqvault::v1::barq_vault_server::BarqVaultServer;
 pub use barqvault::v1::barq_vault_client::BarqVaultClient;
+
 
 pub mod convert;

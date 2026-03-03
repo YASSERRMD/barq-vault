@@ -53,8 +53,8 @@ pub async fn search_handler(
     // Assuming vector generation is part of the search engine or we proxy to one here.
     // For MVP REST, we will just use dummy vector or empty since it's an embedding generation step.
     // Better: use the embedder from ingest pipeline
-    let embed_config = &state.config.ingest.embed;
-    let query_embedding = match barq_ingest::embed(&query.query_text, embed_config).await {
+    let embed_config = barq_ingest::EmbedConfig::default();
+    let query_embedding = match barq_ingest::embed(&query.query_text, &embed_config).await {
         Ok(emb) => emb,
         Err(_) => vec![0.0; embed_config.expected_dim], // Fallback to BM25 if embed fails
     };
