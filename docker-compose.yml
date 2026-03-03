@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  barq-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: barq-vault:latest
+    container_name: barq-vault-server
+    restart: unless-stopped
+    ports:
+      - "50051:50051" # gRPC API
+      - "8080:8080" # REST API
+    volumes:
+      - barq-data:/data
+    environment:
+      - BARQ_ENV=production
+      - RUST_LOG=info,barq_server=debug,barq_ingest=debug
+      - BARQ_SERVER__STORE_PATH=/data
+      - BARQ_SERVER__GRPC_ADDR=0.0.0.0:50051
+      - BARQ_SERVER__REST_ADDR=0.0.0.0:8080
+      # Optionals (LLM)
+      # - BARQ_INGEST__PROVIDER=Local
+      # - BARQ_INGEST__BASE_URL=http://host.docker.internal:11434
+
+volumes:
+  barq-data:
+    driver: local
