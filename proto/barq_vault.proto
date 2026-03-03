@@ -1,0 +1,149 @@
+syntax = "proto3";
+
+package barqvault.v1;
+
+option java_package = "io.barq.vault.v1";
+option go_package = "barq.io/vault/v1";
+
+// barq-vault gRPC service for multimodal document storage and retrieval.
+service BarqVault {
+  // Ingest a single file or chunk.
+  rpc Ingest(ProtoIngestRequest) returns (ProtoIngestResponse);
+
+  // Stream-upload a large file in chunks.
+  rpc IngestStream(stream ProtoChunkUpload) returns (ProtoIngestResponse);
+
+  // Hybrid BM25 + vector search.
+  rpc Search(ProtoSearchRequest) returns (ProtoSearchResponse);
+
+  // Bidirectional streaming search.
+  rpc SearchStream(stream ProtoSearchRequest) returns (stream ProtoSearchResult);
+
+  // Fetch a stored payload, streamed in chunks.
+  rpc Fetch(ProtoFetchRequest) returns (stream ProtoChunkDownload);
+
+  // Delete a record.
+  rpc Delete(ProtoDeleteRequest) returns (ProtoDeleteResponse);
+
+  // Health / liveness probe.
+  rpc Ping(ProtoPingRequest) returns (ProtoPingResponse);
+
+  // Server-wide statistics.
+  rpc Stats(ProtoStatsRequest) returns (ProtoStatsResponse);
+}
+
+// -------------------------
+// Ingest
+// -------------------------
+
+message ProtoIngestRequest {
+  string  summary          = 1;
+  bytes   embedding        = 2;  // little-endian f32 array
+  uint32  embedding_dim    = 3;
+  string  modality         = 4;  // "text" | "image" | "audio" | "video" | "document"
+  string  storage_mode     = 5;  // "text_only" | "hybrid_file" | "full_raw"
+  bytes   raw_payload      = 6;  // optional raw file bytes
+  string  filename         = 7;
+  string  metadata_json    = 8;  // JSON object
+  uint32  chunk_index      = 9;
+  uint32  total_chunks     = 10;
+  string  parent_id        = 11; // UUID string
+}
+
+message ProtoIngestResponse {
+  string  id               = 1;  // UUID string
+  bool    success          = 2;
+  uint64  compressed_size  = 3;
+  float   compression_ratio = 4;
+  string  error            = 5;
+}
+
+message ProtoChunkUpload {
+  bytes   data             = 1;
+  uint32  chunk_index      = 2;
+  uint32  total_chunks     = 3;
+  string  filename         = 4;
+  string  modality         = 5;
+  string  storage_mode     = 6;
+  string  metadata_json    = 7;
+}
+
+// -------------------------
+// Search
+// -------------------------
+
+message ProtoSearchRequest {
+  bytes   query_embedding   = 1;  // little-endian f32 array
+  uint32  embedding_dim     = 2;
+  string  query_text        = 3;
+  float   vector_weight     = 4;
+  uint32  top_k             = 5;
+  string  modality_filter   = 6;  // empty = no filter
+  string  metadata_filter_json = 7;
+}
+
+message ProtoSearchResult {
+  string  id               = 1;
+  string  summary          = 2;
+  string  filename         = 3;
+  string  modality         = 4;
+  float   score            = 5;
+  bool    has_payload      = 6;
+  string  metadata_json    = 7;
+}
+
+message ProtoSearchResponse {
+  repeated ProtoSearchResult results    = 1;
+  uint32                     total_found = 2;
+  uint64                     took_ms    = 3;
+}
+
+// -------------------------
+// Fetch
+// -------------------------
+
+message ProtoFetchRequest {
+  string  id               = 1;
+  bool    decompress       = 2;
+}
+
+message ProtoChunkDownload {
+  bytes   data             = 1;
+  uint32  chunk_index      = 2;
+  uint64  total_bytes      = 3;
+}
+
+// -------------------------
+// Delete
+// -------------------------
+
+message ProtoDeleteRequest {
+  string  id               = 1;
+}
+
+message ProtoDeleteResponse {
+  bool    success          = 1;
+  string  error            = 2;
+}
+
+// -------------------------
+// Ping / Stats
+// -------------------------
+
+message ProtoPingRequest {}
+
+message ProtoPingResponse {
+  string  version          = 1;
+  uint64  uptime_secs      = 2;
+}
+
+message ProtoStatsRequest {}
+
+message ProtoStatsResponse {
+  uint64  total_records          = 1;
+  uint64  total_payload_bytes    = 2;
+  uint64  total_compressed_bytes = 3;
+  float   avg_compression_ratio  = 4;
+  uint64  uptime_secs            = 5;
+  uint64  index_size             = 6;
+}
