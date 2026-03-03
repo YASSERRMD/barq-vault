@@ -19,3 +19,9 @@ async-trait   = { workspace = true }
 tokio         = { workspace = true }
 barq-types    = { path = "../barq-types" }
 barq-store    = { path = "../barq-store" }
+
+[dev-dependencies]
+barq-test-utils = { path = "../barq-test-utils" }
+rstest = { workspace = true }
+proptest = { workspace = true }
+approx = "0.5"

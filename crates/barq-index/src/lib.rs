@@ -13,3 +13,6 @@ pub use manager::IndexManager;
 pub use metadata_index::MetadataIndex;
 pub use tokenizer::{tokenize, tokenize_query};
 pub use vector::VectorIndex;
+
+#[cfg(test)]
+mod tests;
