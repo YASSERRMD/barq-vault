@@ -10,6 +10,7 @@ members = [
     "crates/barq-server",
     "crates/barq-client",
     "crates/barq-cli",
+    "crates/barq-test-utils",
 ]
 
 [workspace.dependencies]
