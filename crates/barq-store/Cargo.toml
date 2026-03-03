@@ -8,6 +8,10 @@ description = "RocksDB-backed storage engine for barq-vault with 4 column famili
 name = "barq_store"
 path = "src/lib.rs"
 
+[[bench]]
+name = "store_bench"
+harness = false
+
 [dependencies]
 rocksdb       = { workspace = true }
 serde         = { workspace = true }
@@ -26,3 +30,4 @@ barq-test-utils = { path = "../barq-test-utils" }
 tempfile = { workspace = true }
 serial_test = { workspace = true }
 rstest = { workspace = true }
+criterion = { version = "0.5", features = ["async_tokio"] }

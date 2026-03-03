@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, "test/**", "feat/**"]
   pull_request:
     branches: [main]
 
@@ -10,7 +10,8 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  test:
+    name: Test Suite
     runs-on: ubuntu-latest
 
     steps:
@@ -41,5 +42,39 @@ jobs:
       - name: cargo clippy
         run: cargo clippy --workspace -- -D warnings
 
-      - name: cargo test
-        run: cargo test --workspace
+      - name: Run unit tests (all crates)
+        run: cargo test --workspace --exclude barq-server
+
+      - name: Run barq-server integration tests
+        run: cargo test -p barq-server
+
+      - name: Verify benchmarks compile
+        run: cargo bench --no-run -p barq-compress -p barq-index -p barq-store
+
+  build-release:
+    name: Release Build
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y liblzma-dev liblz4-dev clang libclang-dev
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-release-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build release binary
+        run: cargo build --release -p barq-server

@@ -4,7 +4,7 @@
 
 [![CI](https://github.com/YASSERRMD/barq-vault/actions/workflows/ci.yml/badge.svg)](https://github.com/YASSERRMD/barq-vault/actions/workflows/ci.yml)
 ![Rust](https://img.shields.io/badge/rust-1.82+-orange.svg)
-![Tests](https://img.shields.io/badge/tests-117%20passing-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-149%20passing-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ---
@@ -78,8 +78,10 @@ Codec is selected automatically per modality (Text → LZMA · Image → Zstd ·
 | `barq-compress` | 26 | LZMA / LZ4 / Zstd round-trips, delta-f32, embedding codec, property-based |
 | `barq-store` | 10 | RocksDB open, full record/payload/metadata CRUD, metadata search |
 | `barq-index` | 23 | Tokenizer, BM25 IDF/TF, cosine vector search, hybrid RRF fusion |
-| `barq-ingest` | 27 | Extension + magic-byte detection (PDF/PNG/WAV), text chunker with overlap |
+| `barq-ingest` | 39 | Extension + magic-byte detection, chunker, LLM mock, embed mock, pipeline |
 | `barq-proto` | 5 | Protobuf IngestRequest / SearchRequest binary round-trips |
+| `barq-client` | 5 | Transport URL validation, SearchResult mapping, modality parsing |
+| `barq-server` | 15 | AppState init, REST router, gRPC-via-state, compression roundtrip, concurrent reads |
 
 ```bash
 cargo test --workspace --exclude barq-server
