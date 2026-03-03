@@ -22,17 +22,19 @@ impl IndexManager {
     /// Rebuild all in-memory indexes from RocksDB on server startup.
     pub fn bootstrap(&mut self) -> BarqResult<()> {
         info!("Bootstrapping index from RocksDB...");
-        let mut count = 0usize;
 
-        for record in self.store.iter_all_records() {
+        // Collect records first to avoid simultaneous mutable + immutable borrow of self
+        let records: Vec<BarqRecord> = self.store.iter_all_records().collect();
+        let total = records.len();
+
+        for (i, record) in records.into_iter().enumerate() {
             self.index_new_internal(&record);
-            count += 1;
-            if count % 1000 == 0 {
-                debug!("Bootstrapped {} records...", count);
+            if (i + 1) % 1000 == 0 {
+                debug!("Bootstrapped {} records...", i + 1);
             }
         }
 
-        info!("Bootstrap complete: indexed {} records", count);
+        info!("Bootstrap complete: indexed {} records", total);
         Ok(())
     }
 
