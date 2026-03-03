@@ -19,5 +19,9 @@ anyhow        = { workspace = true }
 thiserror     = { workspace = true }
 barq-types    = { path = "../barq-types" }
 
+[dev-dependencies]
+barq-test-utils = { path = "../barq-test-utils" }
+rstest = { workspace = true }
+
 [build-dependencies]
 tonic-build   = "0.12"

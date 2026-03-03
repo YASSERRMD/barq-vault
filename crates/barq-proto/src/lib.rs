@@ -17,3 +17,6 @@ pub use barqvault::v1::barq_vault_client::BarqVaultClient;
 
 
 pub mod convert;
+
+#[cfg(test)]
+mod tests;
