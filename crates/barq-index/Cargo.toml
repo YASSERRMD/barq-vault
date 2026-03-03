@@ -8,6 +8,10 @@ description = "BM25 + vector + metadata index with RRF hybrid search for barq-va
 name = "barq_index"
 path = "src/lib.rs"
 
+[[bench]]
+name = "index_bench"
+harness = false
+
 [dependencies]
 serde         = { workspace = true }
 serde_json    = { workspace = true }
@@ -25,3 +29,4 @@ barq-test-utils = { path = "../barq-test-utils" }
 rstest = { workspace = true }
 proptest = { workspace = true }
 approx = "0.5"
+criterion = { version = "0.5", features = ["async_tokio"] }

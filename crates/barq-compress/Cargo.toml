@@ -8,6 +8,10 @@ description = "C++ FFI compression engine for barq-vault (LZMA, LZ4, delta-f32 +
 name = "barq_compress"
 path = "src/lib.rs"
 
+[[bench]]
+name = "compression_bench"
+harness = false
+
 [dependencies]
 bytemuck      = { workspace = true }
 zstd          = { workspace = true }
@@ -20,6 +24,7 @@ barq-test-utils = { path = "../barq-test-utils" }
 rstest = { workspace = true }
 proptest = { workspace = true }
 approx = "0.5"
+criterion = { version = "0.5", features = ["async_tokio"] }
 
 [build-dependencies]
 cc      = "1"
