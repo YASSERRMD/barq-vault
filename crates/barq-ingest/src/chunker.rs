@@ -56,18 +56,24 @@ pub fn chunk_text(text: &str, config: &ChunkConfig) -> Vec<String> {
         if word_count + wc > config.chunk_size_tokens && !acc.is_empty() {
             chunks.push(acc.join(" "));
 
-            // Carry forward last N words as overlap
-            let overlap: Vec<&str> = acc
+            // Collect overlap words into owned strings before reassigning acc
+            let all_words: Vec<String> = acc
                 .iter()
-                .flat_map(|s| s.split_whitespace())
+                .flat_map(|s| s.split_whitespace().map(|w| w.to_string()))
+                .collect();
+            let overlap_words: Vec<String> = all_words
+                .iter()
                 .rev()
                 .take(config.overlap_tokens)
+                .cloned()
                 .collect::<Vec<_>>()
                 .into_iter()
                 .rev()
                 .collect();
-            acc = vec![overlap.join(" ")];
-            word_count = overlap.len();
+            let overlap_str = overlap_words.join(" ");
+            let overlap_len = overlap_words.len();
+            acc = vec![overlap_str];
+            word_count = overlap_len;
         }
         acc.push(sentence.clone());
         word_count += wc;
