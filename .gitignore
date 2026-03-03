@@ -1,0 +1,22 @@
+# Rust
+/target/
+**/*.rs.bk
+
+# Environment
+*.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Generated
+crates/barq-proto/src/generated/*.rs

@@ -1,0 +1,40 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/barq-compress",
+    "crates/barq-types",
+    "crates/barq-store",
+    "crates/barq-index",
+    "crates/barq-ingest",
+    "crates/barq-proto",
+    "crates/barq-server",
+    "crates/barq-client",
+    "crates/barq-cli",
+]
+
+[workspace.dependencies]
+tokio          = { version = "1", features = ["full"] }
+tonic          = { version = "0.12" }
+axum           = { version = "0.7" }
+serde          = { version = "1", features = ["derive"] }
+serde_json     = { version = "1" }
+uuid           = { version = "1", features = ["v4", "serde"] }
+anyhow         = { version = "1" }
+thiserror      = { version = "1" }
+tracing        = { version = "0.1" }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+bytes          = { version = "1" }
+prost          = { version = "0.13" }
+reqwest        = { version = "0.12", features = ["json", "multipart"] }
+rocksdb        = { version = "0.22" }
+zstd           = { version = "0.13" }
+bytemuck       = { version = "1", features = ["derive"] }
+clap           = { version = "4", features = ["derive"] }
+config         = { version = "0.14" }
+chrono         = { version = "0.4", features = ["serde"] }
+blake3         = { version = "1" }
+base64         = { version = "0.22" }
+async-trait    = { version = "0.1" }
+num_cpus       = { version = "1" }
+bincode        = { version = "1" }
+tokio-stream   = { version = "0.1" }
