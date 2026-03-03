@@ -1,0 +1,13 @@
+# Production overrides for barq-vault
+# This file layers on top of default.toml when BARQ_ENV=production
+
+[server.tls]
+enabled = true
+cert_path = "/etc/barq-vault/tls/cert.pem"
+key_path = "/etc/barq-vault/tls/key.pem"
+
+[server]
+store_path = "/var/barq-vault/data"
+
+[server.auth]
+enabled = true

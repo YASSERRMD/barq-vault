@@ -1,0 +1,21 @@
+[package]
+name = "barq-index"
+version = "0.1.0"
+edition = "2021"
+description = "BM25 + vector + metadata index with RRF hybrid search for barq-vault"
+
+[lib]
+name = "barq_index"
+path = "src/lib.rs"
+
+[dependencies]
+serde         = { workspace = true }
+serde_json    = { workspace = true }
+uuid          = { workspace = true }
+anyhow        = { workspace = true }
+thiserror     = { workspace = true }
+tracing       = { workspace = true }
+async-trait   = { workspace = true }
+tokio         = { workspace = true }
+barq-types    = { path = "../barq-types" }
+barq-store    = { path = "../barq-store" }

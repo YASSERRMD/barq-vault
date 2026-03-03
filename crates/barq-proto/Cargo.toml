@@ -1,0 +1,23 @@
+[package]
+name = "barq-proto"
+version = "0.1.0"
+edition = "2021"
+description = "Protobuf generated code and tonic gRPC definitions for barq-vault"
+
+[lib]
+name = "barq_proto"
+path = "src/lib.rs"
+
+[dependencies]
+prost         = { workspace = true }
+tonic         = { workspace = true }
+bytes         = { workspace = true }
+serde         = { workspace = true }
+serde_json    = { workspace = true }
+uuid          = { workspace = true }
+anyhow        = { workspace = true }
+thiserror     = { workspace = true }
+barq-types    = { path = "../barq-types" }
+
+[build-dependencies]
+tonic-build   = "0.12"
