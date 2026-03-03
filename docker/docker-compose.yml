@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  barq-vault:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: barq-vault
+    ports:
+      - "50051:50051" # gRPC
+      - "8080:8080" # REST
+    volumes:
+      - barq-data:/var/barq-vault/data
+      # Optionally mount configuration overrides:
+      # - ../config/production.toml:/etc/barq-vault/config/production.toml
+    env_file:
+      - ../.env
+    environment:
+      - BARQ_ENV=production
+      - RUST_LOG=info
+      - BARQ__SERVER__STORE_PATH=/var/barq-vault/data
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/api/v1/ping" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  barq-data:
+    name: barq-vault-data
