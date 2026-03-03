@@ -34,7 +34,7 @@ pub struct BarqRecord {
     pub summary: String,
 
     /// In-memory embedding vector (not persisted in raw form).
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[serde(default)]
     pub embedding: Vec<f32>,
     /// Delta+Zstd compressed embedding for storage.
     pub compressed_embed: Vec<u8>,
@@ -48,7 +48,7 @@ pub struct BarqRecord {
     pub metadata: serde_json::Value,
 
     /// Compressed raw bytes of the original file (None for TextOnly mode).
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[serde(default)]
     pub compressed_payload: Option<Vec<u8>>,
 
     /// Original (uncompressed) size in bytes.

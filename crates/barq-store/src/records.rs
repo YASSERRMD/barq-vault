@@ -15,7 +15,7 @@ impl BarqStore {
         stripped.embedding = Vec::new();
 
         let key = record.id.as_bytes().to_vec();
-        let value = bincode::serialize(&stripped)
+        let value = serde_json::to_vec(&stripped)
             .map_err(|e| BarqError::Storage(format!("Serialize record: {}", e)))?;
 
         self.db
@@ -28,7 +28,7 @@ impl BarqStore {
         let key = id.as_bytes().to_vec();
         match self.db.get_cf(self.cf(CF_RECORDS), &key) {
             Ok(Some(bytes)) => {
-                let record: BarqRecord = bincode::deserialize(&bytes)
+                let record: BarqRecord = serde_json::from_slice(&bytes)
                     .map_err(|e| BarqError::Storage(format!("Deserialize record: {}", e)))?;
                 Ok(Some(record))
             }
@@ -56,7 +56,7 @@ impl BarqStore {
             .iterator_cf(self.cf(CF_RECORDS), rocksdb::IteratorMode::Start)
             .filter_map(|result| {
                 result.ok().and_then(|(_k, v)| {
-                    bincode::deserialize::<BarqRecord>(&v).ok()
+                    serde_json::from_slice::<BarqRecord>(&v).ok()
                 })
             })
     }
