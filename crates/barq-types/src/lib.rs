@@ -12,3 +12,6 @@ pub use api::{
 pub use error::{BarqError, BarqResult};
 pub use modality::{CodecType, Modality, StorageMode};
 pub use record::BarqRecord;
+
+#[cfg(test)]
+mod tests;
