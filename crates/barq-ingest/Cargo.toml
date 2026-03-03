@@ -26,3 +26,9 @@ barq-compress = { path = "../barq-compress" }
 barq-index    = { path = "../barq-index" }
 tempfile      = "3"
 zip           = { version = "2", default-features = false, features = ["deflate"] }
+
+[dev-dependencies]
+barq-test-utils = { path = "../barq-test-utils" }
+rstest = { workspace = true }
+wiremock = { workspace = true }
+pretty_assertions = { workspace = true }

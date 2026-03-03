@@ -12,3 +12,6 @@ pub use detector::{detect_mime_type, detect_modality};
 pub use embedder::{embed, EmbedConfig, EmbedProvider};
 pub use pipeline::{IngestConfig, IngestPipeline};
 pub use summarizer::{summarize, LlmConfig, LlmProvider};
+
+#[cfg(test)]
+mod tests;
