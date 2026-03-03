@@ -7,6 +7,9 @@ pub mod lzma;
 // The sys module is shared between lzma and embedding — re-export for lz4
 pub(crate) use lzma::sys;
 
+#[cfg(test)]
+mod tests;
+
 use barq_types::{BarqError, BarqResult, Modality};
 
 pub use embedding::{compress_embedding, decompress_embedding};
