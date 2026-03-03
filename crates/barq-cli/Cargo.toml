@@ -21,3 +21,6 @@ clap          = { workspace = true }
 barq-types    = { path = "../barq-types" }
 barq-client   = { path = "../barq-client" }
 barq-ingest   = { path = "../barq-ingest" }
+toml = "0.8"
+barq-server = { version = "0.1.0", path = "../barq-server" }
+reqwest.workspace = true
