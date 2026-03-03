@@ -20,3 +20,9 @@ bincode       = { workspace = true }
 num_cpus      = { workspace = true }
 bytes         = { workspace = true }
 barq-types    = { path = "../barq-types" }
+
+[dev-dependencies]
+barq-test-utils = { path = "../barq-test-utils" }
+tempfile = { workspace = true }
+serial_test = { workspace = true }
+rstest = { workspace = true }
