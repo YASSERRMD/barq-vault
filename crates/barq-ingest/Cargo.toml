@@ -23,4 +23,6 @@ async-trait   = { workspace = true }
 blake3        = { workspace = true }
 barq-types    = { path = "../barq-types" }
 barq-compress = { path = "../barq-compress" }
+barq-index    = { path = "../barq-index" }
 tempfile      = "3"
+zip           = { version = "2", default-features = false, features = ["deflate"] }
