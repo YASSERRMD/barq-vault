@@ -1,0 +1,22 @@
+[package]
+name = "barq-store"
+version = "0.1.0"
+edition = "2021"
+description = "RocksDB-backed storage engine for barq-vault with 4 column families"
+
+[lib]
+name = "barq_store"
+path = "src/lib.rs"
+
+[dependencies]
+rocksdb       = { workspace = true }
+serde         = { workspace = true }
+serde_json    = { workspace = true }
+uuid          = { workspace = true }
+anyhow        = { workspace = true }
+thiserror     = { workspace = true }
+tracing       = { workspace = true }
+bincode       = { workspace = true }
+num_cpus      = { workspace = true }
+bytes         = { workspace = true }
+barq-types    = { path = "../barq-types" }

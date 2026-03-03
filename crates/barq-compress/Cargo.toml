@@ -1,0 +1,20 @@
+[package]
+name = "barq-compress"
+version = "0.1.0"
+edition = "2021"
+description = "C++ FFI compression engine for barq-vault (LZMA, LZ4, delta-f32 + Zstd)"
+
+[lib]
+name = "barq_compress"
+path = "src/lib.rs"
+
+[dependencies]
+bytemuck      = { workspace = true }
+zstd          = { workspace = true }
+thiserror     = { workspace = true }
+anyhow        = { workspace = true }
+barq-types    = { path = "../barq-types" }
+
+[build-dependencies]
+cc      = "1"
+bindgen = "0.70"

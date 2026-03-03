@@ -1,0 +1,16 @@
+[package]
+name = "barq-types"
+version = "0.1.0"
+edition = "2021"
+description = "Shared domain types for barq-vault — zero dependencies on other barq crates"
+
+[lib]
+name = "barq_types"
+path = "src/lib.rs"
+
+[dependencies]
+serde         = { workspace = true }
+serde_json    = { workspace = true }
+uuid          = { workspace = true }
+thiserror     = { workspace = true }
+chrono        = { workspace = true }
