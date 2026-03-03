@@ -23,6 +23,8 @@ bytes              = { workspace = true }
 config             = { workspace = true }
 tokio-stream       = { workspace = true }
 async-trait        = { workspace = true }
+tower-http         = { workspace = true }
+
 barq-types         = { path = "../barq-types" }
 barq-store         = { path = "../barq-store" }
 barq-index         = { path = "../barq-index" }
